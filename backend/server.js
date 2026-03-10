@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const listingRoutes = require('./routes/listingRoutes')
 
 
 //express app
@@ -12,7 +13,6 @@ app.use(cors())
 app.use(express.json())
 
 //connet to DB & listen for requests
-
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     app.listen(process.env.PORT, () => {
@@ -23,6 +23,5 @@ mongoose.connect(process.env.MONGO_URI)
     console.log(error)
 })
 
-app.get('/', (req, res) => {
-    res.json({message:"api is running wild"})
-})
+//Routes
+app.use('/api/listings', listingRoutes)

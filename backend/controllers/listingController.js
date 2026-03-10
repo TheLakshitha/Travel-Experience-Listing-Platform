@@ -1,4 +1,5 @@
-const Listing = require('../models/Listing')
+const Listing = require('../models/Listings')
+const mongoose = require('mongoose')
 
 //create new listing
 const createListing = async (req, res) => {
