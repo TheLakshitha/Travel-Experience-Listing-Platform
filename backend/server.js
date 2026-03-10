@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const listingRoutes = require('./routes/listingRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 
 //express app
@@ -25,3 +26,4 @@ mongoose.connect(process.env.MONGO_URI)
 
 //Routes
 app.use('/api/listings', listingRoutes)
+app.use('/api/users', userRoutes)
