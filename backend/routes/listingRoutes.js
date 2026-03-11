@@ -8,6 +8,7 @@ const {
 } = require('../controllers/listingController')
 
 const requireAuth = require('../middleware/requireAuth')
+const upload = require('../middleware/upload')
 
 const router = express.Router()
 
@@ -20,7 +21,7 @@ router.get('/', getListings)
 router.get('/:id', getListing)
 
 // create new listing
-router.post('/', createListing)
+router.post('/', requireAuth, upload.single('image'), createListing)
 
 // delete a listing
 router.delete('/:id', deleteListing)
