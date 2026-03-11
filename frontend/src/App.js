@@ -5,6 +5,7 @@ import Signup from "./pages/SignUp";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import ListingDetail from './pages/ListingDetail';
+import AddListing from "./pages/AddListing";
 
 function App() {
   const { user } = useAuthContext();
@@ -14,10 +15,11 @@ function App() {
       <Navbar />
       <div className="pages">
         <Routes>
-          <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+          <Route path="/" element={ <Home />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
           <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
-          <Route path="/listings/:id" element={user ? <ListingDetail /> : <Navigate to="/login" />} />
+          <Route path="/listings/:id" element={<ListingDetail />} />
+          <Route path="/add-listing" element={user ? <AddListing /> : <Navigate to="/login" />} />
           
         </Routes>
       </div>

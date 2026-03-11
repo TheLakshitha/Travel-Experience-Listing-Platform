@@ -1,16 +1,10 @@
-import { Link } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { Link } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useLogout } from '../hooks/useLogout';
 
 const Navbar = () => {
-  const { user, dispatch } = useAuthContext();
-
-  const handleLogout = () => {
-    // remove user from local storage
-    localStorage.removeItem("user");
-
-    // update auth context
-    dispatch({ type: "LOGOUT" });
-  };
+  const { user } = useAuthContext();
+  const { logout } = useLogout();
 
   return (
     <header>
@@ -22,12 +16,17 @@ const Navbar = () => {
           {user ? (
             <div>
               <span>Welcome, {user.name || user.email}</span>
-              <button onClick={handleLogout}>Log Out</button>
+              <Link to="/add-listing" style={{ marginLeft: "20px" }}>
+                Add Listing
+              </Link>
+              <button onClick={logout} style={{ marginLeft: "20px" }}>
+                Log Out
+              </button>
             </div>
           ) : (
             <div>
               <Link to="/login">Log In</Link>
-              <Link to="/signup">Sign Up</Link>
+              <Link to="/signup" style={{ marginLeft: "10px" }}>Sign Up</Link>
             </div>
           )}
         </nav>

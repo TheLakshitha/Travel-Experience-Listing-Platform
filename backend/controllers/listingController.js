@@ -47,9 +47,7 @@ const getListings = async (req, res) => {
 
         const baseUrl = req.protocol + '://' + req.get('host')
 
-        const listings = await Listing.find()
-            .populate("createdBy", "name")
-            .sort({ createdAt: -1 })
+        const listings = await Listing.find().populate("createdBy", "name _id email").sort({ createdAt: -1 });
 
         const formattedListings = listings.map(listing => ({
             ...listing._doc,
@@ -77,8 +75,7 @@ const getListing = async (req, res) => {
             return res.status(404).json({ error: "No such listing" })
         }
 
-        const listing = await Listing.findById(id)
-            .populate("createdBy", "name")
+        const listing = await Listing.findById(id).populate("createdBy", "name _id email");
 
         if (!listing) {
             return res.status(404).json({ error: "No such listing" })
@@ -106,23 +103,20 @@ const deleteListing = async (req, res) => {
   const { id } = req.params
 
   try {
-    // 1. Validate ID
+  
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: "No such listing" })
     }
 
-    // 2. Find listing
     const listing = await Listing.findById(id)
     if (!listing) {
       return res.status(404).json({ error: "No such listing" })
     }
 
-    // 3. Authorization check: only creator can delete
     if (listing.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({ error: "You are not allowed to delete this listing" })
     }
 
-    // 4. Delete
     await listing.deleteOne()
 
     res.status(200).json({ message: "Listing deleted successfully" })

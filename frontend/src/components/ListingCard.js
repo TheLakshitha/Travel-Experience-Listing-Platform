@@ -7,18 +7,18 @@ const ListingCard = ({ listing }) => {
 
   return (
     <div className="listing-card">
-      <img src={`http://localhost:4000/${image}`} alt={title} />
+      <img src={image} alt={title} />
       <div className="listing-info">
         <h3>{title}</h3>
         <p><strong>Location:</strong> {location}</p>
         <p>{description}</p>
         {price && <p><strong>Price:</strong> ${price}</p>}
         {createdBy && <p><strong>By:</strong> {createdBy.name || createdBy.email}</p>}
-        <p><em>Posted: {formattedDate}</em></p>
+        <p><em>Posted: {formattedDate}  </em></p>
         <Link to={`/listings/${_id}`}>View Details</Link>
       </div>
     </div>
   );
 };
-
+ 
 export default ListingCard;

@@ -12,13 +12,15 @@ const upload = require('../middleware/upload')
 
 const router = express.Router()
 
-router.use(requireAuth)
+
 
 // get all listings 
 router.get('/', getListings)
 
 // get a single listing 
 router.get('/:id', getListing)
+
+router.use(requireAuth)
 
 // create new listing
 router.post('/', requireAuth, upload.single('image'), createListing)

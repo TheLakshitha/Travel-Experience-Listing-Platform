@@ -10,7 +10,7 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:4000/api/user/login", {
+    const response = await fetch("http://localhost:4000/api/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -23,11 +23,15 @@ export const useLogin = () => {
       setIsLoading(false);
     }
     if (response.ok) {
-      // save user in local storage
-      localStorage.setItem("user", JSON.stringify(json));
+      const userData = {
+        _id: json._id,
+        name: json.name,
+        email: json.email,
+        token: json.token,
+      };
 
-      // update auth context
-      dispatch({ type: "LOGIN", payload: json });
+      localStorage.setItem("user", JSON.stringify(userData));
+      dispatch({ type: "LOGIN", payload: userData });
       setIsLoading(false);
     }
   };
